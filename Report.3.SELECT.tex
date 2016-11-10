@@ -1,0 +1,205 @@
+1. All infos of employees
+
+SELECT * FROM employees;
+
+| 499987 | 1961-09-05 | Rimli          | Dusink           | F      | 1998-09-20 |
+| 499988 | 1962-09-28 | Bangqing       | Kleiser          | F      | 1986-06-06 |
+| 499989 | 1954-05-26 | Keiichiro      | Lindqvist        | M      | 1993-10-28 |
+| 499990 | 1963-11-03 | Khaled         | Kohling          | M      | 1985-10-10 |
+| 499991 | 1962-02-26 | Pohua          | Sichman          | F      | 1989-01-12 |
+| 499992 | 1960-10-12 | Siamak         | Salverda         | F      | 1987-05-10 |
+| 499993 | 1963-06-04 | DeForest       | Mullainathan     | M      | 1997-04-07 |
+| 499994 | 1952-02-26 | Navin          | Argence          | F      | 1990-04-24 |
+| 499995 | 1958-09-24 | Dekang         | Lichtner         | F      | 1993-01-12 |
+| 499996 | 1953-03-07 | Zito           | Baaz             | M      | 1990-09-27 |
+| 499997 | 1961-08-03 | Berhard        | Lenart           | M      | 1986-04-21 |
+| 499998 | 1956-09-05 | Patricia       | Breugel          | M      | 1993-10-13 |
+| 499999 | 1958-05-01 | Sachin         | Tsukuda          | M      | 1997-11-30 |
++--------+------------+----------------+------------------+--------+------------+
+300024 rows in set (0.38 sec)
+
+2. All infos of departments
+
+SELECT * FROM departments;
+
++---------+--------------------+
+| dept_no | dept_name          |
++---------+--------------------+
+| d009    | Customer Service   |
+| d005    | Development        |
+| d002    | Finance            |
+| d003    | Human Resources    |
+| d001    | Marketing          |
+| d004    | Production         |
+| d006    | Quality Management |
+| d008    | Research           |
+| d007    | Sales              |
++---------+--------------------+
+9 rows in set (0.00 sec)
+
+3. Fullnames of all employees
+
+SELECT CONCAT(first_name, ' ', last_name) AS Fullname FROM employees;
+
+| Rimli Dusink                   |
+| Bangqing Kleiser               |
+| Keiichiro Lindqvist            |
+| Khaled Kohling                 |
+| Pohua Sichman                  |
+| Siamak Salverda                |
+| DeForest Mullainathan          |
+| Navin Argence                  |
+| Dekang Lichtner                |
+| Zito Baaz                      |
+| Berhard Lenart                 |
+| Patricia Breugel               |
+| Sachin Tsukuda                 |
++--------------------------------+
+300024 rows in set (0.22 sec)
+
+4. Names of all departments
+
+SELECT dept_name FROM departments;
+
++--------------------+
+| dept_name          |
++--------------------+
+| Customer Service   |
+| Development        |
+| Finance            |
+| Human Resources    |
+| Marketing          |
+| Production         |
+| Quality Management |
+| Research           |
+| Sales              |
++--------------------+
+9 rows in set (0.00 sec)
+
+5. Full names of employees working in "Sales" department
+
+SELECT CONCAT(first_name, ' ', last_name) AS Fullname FROM employees 
+JOIN dept_emp ON employees.emp_no = dept_emp.emp_no
+JOIN departments ON dept_emp.dept_no = departments.dept_no
+WHERE dept_name = 'Sales';
+
+| Aloke Wuwongse                |
+| Masako Angiulli               |
+| Christ Murtagh                |
+| Youpyo Perfilyeva             |
+| Leszek Pulkowski              |
+| Gaetan Veldwijk               |
+| Mihalis Crabtree              |
+| Bangqing Bodoff               |
+| Guozhong Felder               |
+| Gino Usery                    |
+| Nathan Ranta                  |
+| Rimli Dusink                  |
+| Bangqing Kleiser              |
++-------------------------------+
+52245 rows in set (0.89 sec)
+
+6. Full names of male employees working in "Finance" department
+
+SELECT CONCAT(first_name, ' ', last_name) AS Fullname FROM employees 
+JOIN dept_emp ON employees.emp_no = dept_emp.emp_no
+JOIN departments ON dept_emp.dept_no = departments.dept_no
+WHERE dept_name = 'Finance' AND gender='M';
+
+| Parto Kambil                 |
+| Haldun Mullainathan          |
+| Ymte Potthoff                |
+| Nagui Stamatiou              |
+| Bernd Gluchowski             |
+| Phillip Panienski            |
+| Sastry Szmurlo               |
+| Jacopo Hasham                |
+| Moon Pleszkun                |
+| Hercules Porotnikoff         |
+| Shaz Bierbaum                |
+| Masali Chorvat               |
+| Keiichiro Lindqvist          |
+| Patricia Breugel             |
++------------------------------+
+10331 rows in set (0.52 sec)
+
+7. Salaries of female employees working in "Marketing" department
+
+SELECT salary FROM salaries JOIN employees ON salaries.emp_no = employees.emp_no
+JOIN dept_emp ON employees.emp_no = dept_emp.emp_no
+JOIN departments ON dept_emp.dept_no = departments.dept_no
+WHERE gender='F' AND dept_name = 'Marketing'; 
+
+|  52539 |
+|  56516 |
+|  59357 |
+|  63601 |
+|  64778 |
+|  65475 |
+|  69488 |
+|  72212 |
+|  71874 |
+|  73574 |
+|  76708 |
+|  79327 |
+|  80389 |
++--------+
+74996 rows in set (3.89 sec)
+
+8. Full names of employees who have the same last name as their manager
+
+SELECT CONCAT(first_name, ' ', last_name) AS Fullname FROM employees
+
+9. Full names of employees who was paid more than 100000 usd
+
+SELECT CONCAT(first_name, ' ', last_name) AS Fullname FROM employees
+JOIN salaries ON employees.emp_no = salaries.emp_no 
+WHERE salary > 100000;
+
+| Guozhong Felder             |
+| Guozhong Felder             |
+| Gino Usery                  |
+| Gino Usery                  |
+| Gino Usery                  |
+| Gino Usery                  |
+| Gino Usery                  |
+| Gino Usery                  |
+| Gino Usery                  |
+| Nathan Ranta                |
+| Nathan Ranta                |
+| Nathan Ranta                |
+| Nathan Ranta                |
+| Nathan Ranta                |
+| Nathan Ranta                |
+| Nathan Ranta                |
+| Nathan Ranta                |
+| Nathan Ranta                |
+| Nathan Ranta                |
+| Nathan Ranta                |
+| Nathan Ranta                |
+| Bangqing Kleiser            |
++-----------------------------+
+94696 rows in set (9.06 sec)
+
+10. Names of all departments that have employees paid more than $100000
+
+SELECT dept_name FROM departments JOIN dept_emp ON departments.dept_no = dept_emp.dept_no
+JOIN employees ON dept_emp.emp_no = employees.emp_no
+JOIN salaries ON employees.emp_no = salaries.emp_no
+WHERE salary > 100000
+GROUP BY dept_name;
+
++--------------------+
+| dept_name          |
++--------------------+
+| Customer Service   |
+| Development        |
+| Finance            |
+| Human Resources    |
+| Marketing          |
+| Production         |
+| Quality Management |
+| Research           |
+| Sales              |
++--------------------+
+9 rows in set (5.38 sec)

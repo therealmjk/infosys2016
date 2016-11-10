@@ -1,0 +1,80 @@
+1. All info of all employees
+
+\project_{emp_no,birth_date,first_name,last_name,gender} employees;
+
+499983|1955-08-29|Uri|Juneja|F
+499984|1959-08-31|Kaijung|Rodham|M
+499985|1964-12-26|Gila|Lukaszewicz|M
+499986|1952-07-22|Nathan|Ranta|F
+499987|1961-09-05|Rimli|Dusink|F
+499988|1962-09-28|Bangqing|Kleiser|F
+499989|1954-05-26|Keiichiro|Lindqvist|M
+499990|1963-11-03|Khaled|Kohling|M
+499991|1962-02-26|Pohua|Sichman|F
+499992|1960-10-12|Siamak|Salverda|F
+499993|1963-06-04|DeForest|Mullainathan|M
+499994|1952-02-26|Navin|Argence|F
+499995|1958-09-24|Dekang|Lichtner|F
+499996|1953-03-07|Zito|Baaz|M
+499997|1961-08-03|Berhard|Lenart|M
+499998|1956-09-05|Patricia|Breugel|M
+499999|1958-05-01|Sachin|Tsukuda|M
+-----
+Total number of rows: 300024
+
+2. All info of all departments
+
+\project_{dept_no,dept_name} departments;
+Output schema: (dept_no CHAR, dept_name VARCHAR)
+-----
+d009|Customer Service
+d005|Development
+d002|Finance
+d003|Human Resources
+d001|Marketing
+d004|Production
+d006|Quality Management
+d008|Research
+d007|Sales
+-----
+Total number of rows: 9
+
+3. Full names of all employees
+
+\project_{first_name,last_name} employees;
+
+Zvonko|Vesna
+Zvonko|Viele
+Zvonko|Vigier
+Zvonko|Waeselynck
+Zvonko|Waterhouse
+Zvonko|Whitcomb
+Zvonko|Wielonsky
+Zvonko|Wilharm
+Zvonko|Wroclawski
+Zvonko|Yetto
+Zvonko|Yoshizawa
+Zvonko|Yurov
+Zvonko|Zambonelli
+Zvonko|Zobel
+Zvonko|Zuberek
+-----
+Total number of rows: 279408
+
+4.Names of all departments
+
+\project_{dept_name} departments;
+
+Output schema: (dept_name VARCHAR)
+-----
+Customer Service
+Development
+Finance
+Human Resources
+Marketing
+Production
+Quality Management
+Research
+Sales
+-----
+Total number of rows: 9
