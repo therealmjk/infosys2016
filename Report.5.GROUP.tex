@@ -1,267 +1,180 @@
 \documentclass[]{article}
+\usepackage[utf8]{inputenc}
 \begin{document}
+
 \begin{enumerate}
 \item What is the average salary of each employee?
-\\\\	
-SELECT CONCAT(first\_name, ' ', last\_name) AS Fullname,AVG(salary) AS Av\_Salary FROM salaries,employees
-WHERE salaries.emp\_no = employees.emp\_no
-GROUP BY salaries.emp\_no;
-\\\\
+
+\begin{verbatim}
+SELECT CONCAT(first_name, ' ', last_name) AS Fullname,AVG(salary) AS Av_Salary 
+	FROM salaries,employees
+WHERE salaries.emp_no = employees.emp_no
+GROUP BY salaries.emp_no;
+\end{verbatim}
+	
+\begin{verbatim}
 | Gino Usery                     |  99940.8333 |
-\\
 | Yunming Mitina                 |  53637.1667 |
-\\
 | Mohammed Pleszkun              |  39829.5000 |
-\\
 | Uri Juneja                     |  46269.7500 |
-\\
 | Kaijung Rodham                 |  54431.2143 |
-\\
 | Gila Lukaszewicz               |  43500.6667 |
-\\
 | Nathan Ranta                   | 105961.7059 |
-\\
 | Rimli Dusink                   |  54279.6667 |
-\\
 | Bangqing Kleiser               |  86700.7143 |
-\\
 | Keiichiro Lindqvist            |  68260.4000 |
-\\
 | Khaled Kohling                 |  43325.0000 |
-\\
 | Pohua Sichman                  |  47829.5000 |
-\\
 | Siamak Salverda                |  64179.7500 |
-\\
 | DeForest Mullainathan          |  40944.6667 |
-\\
 | Navin Argence                  |  40000.0000 |
-\\
 | Dekang Lichtner                |  45891.6667 |
-\\
 | Zito Baaz                      |  63134.1429 |
-\\
 | Berhard Lenart                 |  66475.8667 |
-\\
 | Patricia Breugel               |  46665.5556 |
-\\
 | Sachin Tsukuda                 |  70625.0000 |
-\\
 +--------------------------------+-------------+
-\\
 300024 rows in set (11.38 sec)
-\\
+\end{verbatim}
+	
 \item How much was each employee paid in total?
-\\\\
-SELECT CONCAT(first\_name, ' ', last\_name) AS Fullname,SUM(salary) AS Total\_Salary FROM salaries,employees
-WHERE salaries.emp\_no = employees.emp\_no
-GROUP BY salaries.emp\_no;
-\\\\
+
+\begin{verbatim}
+SELECT CONCAT(first_name, ' ', last_name) AS Fullname,SUM(salary) AS Total_Salary 
+FROM salaries,employees
+WHERE salaries.emp_no = employees.emp_no
+GROUP BY salaries.emp_no;
+\end{verbatim}
+	
+\begin{verbatim}
 | Kaijung Rodham                 |       762037 |
-\\
 | Gila Lukaszewicz               |       261004 |
-\\
 | Nathan Ranta                   |      1801349 |
-\\
 | Rimli Dusink                   |       162839 |
-\\
 | Bangqing Kleiser               |      1213810 |
-\\
 | Keiichiro Lindqvist            |       341302 |
-\\
 | Khaled Kohling                 |       129975 |
-\\
 | Pohua Sichman                  |       286977 |
-\\
 | Siamak Salverda                |      1026876 |
-\\
 | DeForest Mullainathan          |       245668 |
-\\
 | Navin Argence                  |        40000 |
-\\
 | Dekang Lichtner                |       275350 |
-\\
 | Zito Baaz                      |       441939 |
-\\
 | Berhard Lenart                 |       997138 |
-\\
 | Patricia Breugel               |       419990 |
-\\
 | Sachin Tsukuda                 |       353125 |
-\\
 +--------------------------------+--------------+
-\\
 300024 rows in set (9.98 sec)
-\\
+\end{verbatim}	
+
 \item Minimum, maximum and total salaries of each department
-\\\\
-SELECT dept\_name,MIN(salary) AS Min\_Sal,MAX(salary) AS Max\_Sal,SUM(salary) AS Total\_Sal FROM salaries,dept\_emp,departments
-WHERE salaries.emp\_no = dept\_emp.emp\_no
+
+\begin{verbatim}
+SELECT 
+dept_name,MIN(salary) AS Min_Sal,MAX(salary) AS Max_Sal,SUM(salary) AS Total_Sal 
+FROM salaries,dept_emp,departments
+WHERE salaries.emp_no = dept_emp.emp_no
 AND
-dept\_emp.dept\_no = departments.dept\_no
-GROUP BY departments.dept\_no;
-\\\\
+dept_emp.dept_no = departments.dept_no
+GROUP BY departments.dept_no;
+\end{verbatim}
+	
+\begin{verbatim}
 +--------------------------+---------+---------+-------------+
-\\
-| dept\_name                | Min\_Sal | Max\_Sal | Total\_Sal   |
-\\
+| dept_name                | Min_Sal | Max_Sal | Total_Sal   |
 +--------------------------+---------+---------+-------------+
-\\
 | Finance                  |   38812 |  142395 | 11650834677 |
-\\
 | Human Resources          |   38735 |  141953 |  9363811425 |
-\\
 | Production               |   38623 |  138273 | 41554438942 |
-\\
 | Quality Management       |   38786 |  132103 | 10865203635 |
-\\
 | Customer Service         |   38836 |  144866 | 13143639841 |
-\\
 | Research and Development |   38849 |  144434 | 57200885924 |
-\\
 | Marketing and Sales      |   39127 |  158220 | 51054820927 |
-\\
 +--------------------------+---------+---------+-------------+
-\\
 7 rows in set (4.13 sec)
-\\
+\end{verbatim}	
+
 \item Which departments have paid more than 20 billion dollars for their employees?
-\\\\
-SELECT dept\_name,SUM(salary) AS Total\_Sal FROM salaries,dept\_emp,departments
-WHERE salaries.emp\_no = dept\_emp.emp\_no
+
+\begin{verbatim}
+SELECT dept_name,SUM(salary) AS Total_Sal 
+FROM salaries,dept_emp,departments
+WHERE salaries.emp_no = dept_emp.emp_no
 AND
-dept\_emp.dept\_no = departments.dept\_no
-GROUP BY departments.dept\_no
-HAVING Total\_Sal > 20000000000;
-\\\\
+dept_emp.dept_no = departments.dept_no
+GROUP BY departments.dept_no
+HAVING Total_Sal > 20000000000;
+\end{verbatim}	
+
+\begin{verbatim}
 +--------------------------+-------------+
-\\
-| dept\_name                | Total\_Sal   |
-\\
+| dept_name                | Total_Sal   |
 +--------------------------+-------------+
-\\
 | Production               | 41554438942 |
-\\
 | Research and Development | 57200885924 |
-\\
 | Marketing and Sales      | 51054820927 |
-\\
 +--------------------------+-------------+
-\\
 3 rows in set (3.47 sec)
-\\
+\end{verbatim}
+
 \item Total salaries of male employees in each department?
-\\\\
-SELECT dept\_name,CONCAT(first\_name, ' ', last\_name) AS Fullname,SUM(salary) AS Total\_Salary,gender FROM salaries,employees,dept\_emp,departments
-WHERE salaries.emp\_no = employees.emp\_no
+
+\begin{verbatim}
+SELECT dept_name,SUM(salary) AS Total_Salary 
+FROM salaries,employees,dept_emp,departments
+WHERE salaries.emp_no = employees.emp_no
 AND
-employees.emp\_no = dept\_emp.emp\_no
+employees.emp_no = dept_emp.emp_no
 AND
-dept\_emp.dept\_no = departments.dept\_no
+dept_emp.dept_no = departments.dept_no
 AND
 employees.gender='M'
-GROUP BY salaries.emp\_no,departments.dept\_no;
-\\\\
-| Human Resources          | Masali Chorvat                |        84408 | M      |
-\\
-| Marketing and Sales      | Guozhong Felder               |      1345216 | M      |
-\\
-| Customer Service         | Chiranjit Kuzuoka             |        81746 | M      |
-\\
-| Research and Development | Prasadram Waleschkowski       |       301711 | M      |
-\\
-| Marketing and Sales      | Gino Usery                    |      1199290 | M      |
-\\
-| Customer Service         | Mohammed Pleszkun             |        79659 | M      |
-\\
-| Production               | Kaijung Rodham                |       762037 | M      |
-\\
-| Research and Development | Gila Lukaszewicz              |       261004 | M      |
-\\
-| Finance                  | Keiichiro Lindqvist           |       341302 | M      |
-\\
-| Research and Development | Khaled Kohling                |       129975 | M      |
-\\
-| Production               | DeForest Mullainathan         |       245668 | M      |
-\\
-| Production               | Zito Baaz                     |       441939 | M      |
-\\
-| Research and Development | Berhard Lenart                |       997138 | M      |
-\\
-| Finance                  | Patricia Breugel              |       419990 | M      |
-\\
-| Production               | Sachin Tsukuda                |       353125 | M      |
-\\
-+--------------------------+-------------------------------+--------------+--------+
-\\
-193533 rows in set (8.03 sec)
-\\
+GROUP BY departments.dept_no;
+\end{verbatim}	
+
+\begin{verbatim}
++--------------------------+--------------+
+| dept_name                | Total_Salary |
++--------------------------+--------------+
+| Finance                  |   6940675318 |
+| Human Resources          |   5619533959 |
+| Production               |  24873889749 |
+| Quality Management       |   6472073211 |
+| Customer Service         |   7865587983 |
+| Research and Development |  34387010200 |
+| Marketing and Sales      |  30754859529 |
++--------------------------+--------------+
+7 rows in set (2.86 sec)
+\end{verbatim}	
+
 \item Total salaries of department managers for each department, from highest to lowest?
-\\\\
-SELECT dept\_name,CONCAT(first\_name, ' ', last\_name) AS Fullname,SUM(salary) AS Total\_Salary FROM salaries,employees,dept\_manager,departments
-WHERE salaries.emp\_no = employees.emp\_no
+
+\begin{verbatim}
+SELECT dept_name,SUM(salary) AS Total_Salary 
+	FROM salaries,employees,dept_manager,departments
+WHERE salaries.emp_no = employees.emp_no
 AND
-employees.emp\_no = dept\_manager.emp\_no
+employees.emp_no = dept_manager.emp_no
 AND
-dept\_manager.dept\_no = departments.dept\_no
-GROUP BY dept\_manager.emp\_no,dept\_manager.dept\_no;
-\\\\
-+--------------------------+-----------------------+--------------+
-\\
-| dept\_name                | Fullname              | Total\_Salary |
-\\
-+--------------------------+-----------------------+--------------+
-\\
-| Marketing and Sales      | Margareta Markovitch  |      1604309 |
-\\
-| Marketing and Sales      | Vishwani Minakawa     |      1488700 |
-\\
-| Finance                  | Ebru Alpin            |      1310810 |
-\\
-| Finance                  | Isamu Legleitner      |      1238562 |
-\\
-| Human Resources          | Shirish Ossenbruggen  |      1133824 |
-\\
-| Human Resources          | Karsten Sigstam       |       964474 |
-\\
-| Production               | Krassimir Wegerle     |      1026942 |
-\\
-| Production               | Rosine Cools          |      1081365 |
-\\
-| Production               | Shem Kieras           |       750316 |
-\\
-| Production               | Oscar Ghazalie        |       515381 |
-\\
-| Research and Development | DeForest Hagimont     |      1126227 |
-\\
-| Research and Development | Leon DasSarma         |       902149 |
-\\
-| Quality Management       | Peternela Onuegbe     |      1463422 |
-\\
-| Quality Management       | Rutger Hofmeyr        |       774488 |
-\\
-| Quality Management       | Sanjoy Quadeer        |      1087928 |
-\\
-| Quality Management       | Dung Pesch            |       836280 |
-\\
-| Marketing and Sales      | Przemyslawa Kaelbling |      1516364 |
-\\
-| Marketing and Sales      | Hauke Zhang           |      1398754 |
-\\
-| Research and Development | Arie Staelin          |      1569911 |
-\\
-| Research and Development | Hilary Kambil         |       988750 |
-\\
-| Customer Service         | Tonny Butterworth     |      1048025 |
-\\
-| Customer Service         | Marjo Giarratana      |       750497 |
-\\
-| Customer Service         | Xiaobin Spinelli      |       691464 |
-\\
-| Customer Service         | Yuchang Weedman       |       697675 |
-\\
-+--------------------------+-----------------------+--------------+
-\\
-24 rows in set (0.01 sec)
+dept_manager.dept_no = departments.dept_no
+GROUP BY dept_manager.dept_no;
+\end{verbatim}	
+
+\begin{verbatim}
++--------------------------+--------------+
+| dept_name                | Total_Salary |
++--------------------------+--------------+
+| Finance                  |      2549372 |
+| Human Resources          |      2098298 |
+| Production               |      3374004 |
+| Quality Management       |      4162118 |
+| Customer Service         |      3187661 |
+| Research and Development |      4587037 |
+| Marketing and Sales      |      6008127 |
++--------------------------+--------------+
+7 rows in set (0.00 sec)
+\end{verbatim}	
+
 \end{enumerate}
+
 \end{document}
