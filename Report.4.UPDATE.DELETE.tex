@@ -1,48 +1,73 @@
-1. Steps & Explanation
-	i. Insert a new record into the department table with dept_no='d010' and dept_name='Research and 								   Development'
-	   We need this new row in the database to have a department called 'Reserch and Development' so as to 	be able to
-	   update employees in the Development and Research department to our newly created department.
-	   
-    ii.Insert a new record into the department table with dept_no='d011' and dept_name='Marketing and Sales'
-	   We need this new row in the database to have a department called 'Marketing and Sales' so as to be able to
-	   update employees in the Marketing and Sales department to our newly created department.
-	   
-	iii. We need to identify the tables that uses the dept_no and update the dept_no. The tables in this case are dept_emp 				 and dept_manager. We need to update the dept_no 'd005' and 'd008' to 'd010' like wise we need to update dept_no 				 'd001' and 'd007' to 'd011'. These operation should be performed on the dept_emp and dept_manager tables.
-	
-	iv. When updating we need to use the 'IGNORE' keyword after the update. The reason to use this keyword is because if 				there is a conflict with the primary key you won't be able to replace the department. Using this keyword helps 					delete the record and replaces it with the new record.
-
-	
-2. SQL commands and output
-	
-	- INSERTING INTO DEPARTMENTS
-		INSERT INTO departments(dept_no,dept_name) VALUES ('d010','Research and Development');
-		Query OK, 1 row affected (0.08 sec)
-	
-		INSERT INTO departments(dept_no,dept_name) VALUES ('d011','Marketing and Sales');
-		Query OK, 1 row affected (0.06 sec)
-	
-	- UPDATING DEPARTMENT IN DEPT_EMP
-		UPDATE IGNORE dept_emp SET dept_no='d010' WHERE dept_no='d005';
-		Query OK, 85707 rows affected (21.11 sec)
-		Rows matched: 85707  Changed: 85707  Warnings: 0
-		
-		UPDATE IGNORE dept_emp SET dept_no='d010' WHERE dept_no='d008';
-		Query OK, 15892 rows affected, 5234 warnings (6.35 sec)
-		Rows matched: 21126  Changed: 15892  Warnings: 5234
-		
-		UPDATE IGNORE dept_emp SET dept_no='d011' WHERE dept_no='d001' OR dept_no='d007';
-		Query OK, 68804 rows affected, 3652 warnings (12.34 sec)
-		Rows matched: 72456  Changed: 68804  Warnings: 3652
-	
-	- UPDATING DEPARTMENT IN DEPT_MANAGER
-		UPDATE IGNORE dept_manager SET dept_no='d010' WHERE dept_no='d005' OR dept_no='d008';
-		Query OK, 4 rows affected (0.16 sec)
-		Rows matched: 4  Changed: 4  Warnings: 0
-		
-		UPDATE IGNORE dept_manager SET dept_no='d011' WHERE dept_no='d001' OR dept_no='d007';
-		Query OK, 4 rows affected (0.08 sec)
-		Rows matched: 4  Changed: 4  Warnings: 0
-		
-	- DELETING FROM DEPARTMENT
-		DELETE FROM departments WHERE dept_no='d001' OR dept_no='d005' OR dept_no='d007' OR dept_no='d008';
-		Query OK, 4 rows affected (0.38 sec)
+\documentclass[]{article}
+\begin{document}
+\begin{enumerate}
+\item Steps \& Explanation
+\renewcommand{\labelenumii}{\Roman{enumii}}
+\begin{enumerate}
+\item Insert a new record into the department table with dept\_no='d010' and dept\_name='Research and 							Development'
+We need this new row in the database to have a department called 'Research and Development' so as to be able to
+update employees in the Development and Research department to our newly created department.
+\\
+\item Insert a new record into the department table with dept\_no='d011' and dept\_name='Marketing and Sales'
+We need this new row in the database to have a department called 'Marketing and Sales' so as to be able to
+update employees in the Marketing and Sales department to our newly created department.
+\\
+\item We need to identify the tables that uses the dept\_no and update the dept\_no. The tables in this case are 				dept\_emp and dept\_manager. 
+\\
+\item We need to update the dept\_no 'd005' and 'd008' to 'd010' like wise we need to update dept\_no 				 			'd001' and 'd007' to 'd011'. These operation should be performed on the dept\_emp and dept\_manager tables.
+\\
+\item When updating we need to use the 'IGNORE' keyword after the update. The reason to use this keyword is because if 			there is a conflict with the primary key you won't be able to replace the department. Using this keyword helps 					delete the record and replaces it with the new record.
+\end{enumerate}
+\item SQL commands and output
+\begin{itemize}
+\item INSERTING INTO DEPARTMENTS
+\\\\
+INSERT INTO departments(dept\_no,dept\_name) VALUES ('d010','Research and Development');
+\\
+Query OK, 1 row affected (0.08 sec)
+\\\\
+INSERT INTO departments(dept\_no,dept\_name) VALUES ('d011','Marketing and Sales');
+\\
+Query OK, 1 row affected (0.06 sec)
+\\\\
+\item UPDATING DEPARTMENT IN DEPT\_EMP
+\\\\
+UPDATE IGNORE dept\_emp SET dept\_no='d010' WHERE dept\_no='d005';
+\\
+Query OK, 85707 rows affected (21.11 sec)
+\\
+Rows matched: 85707  Changed: 85707  Warnings: 0
+\\\\
+UPDATE IGNORE dept\_emp SET dept\_no='d010' WHERE dept\_no='d008';
+\\
+Query OK, 15892 rows affected, 5234 warnings (6.35 sec)
+\\
+Rows matched: 21126  Changed: 15892  Warnings: 5234
+\\\\
+UPDATE IGNORE dept\_emp SET dept\_no='d011' WHERE dept\_no='d001' OR dept\_no='d007';
+\\
+Query OK, 68804 rows affected, 3652 warnings (12.34 sec)
+\\
+Rows matched: 72456  Changed: 68804  Warnings: 3652
+\\
+\item UPDATING DEPARTMENT IN DEPT\_MANAGER
+\\\\
+UPDATE IGNORE dept\_manager SET dept\_no='d010' WHERE dept\_no='d005' OR dept\_no='d008';
+\\
+Query OK, 4 rows affected (0.16 sec)
+\\
+Rows matched: 4  Changed: 4  Warnings: 0
+\\\\
+UPDATE IGNORE dept\_manager SET dept\_no='d011' WHERE dept\_no='d001' OR dept\_no='d007';
+\\
+Query OK, 4 rows affected (0.08 sec)
+\\
+Rows matched: 4  Changed: 4  Warnings: 0
+\\	
+\item DELETING FROM DEPARTMENT
+DELETE FROM departments WHERE dept\_no='d001' OR dept\_no='d005' OR dept\_no='d007' OR dept\_no='d008';
+\\
+Query OK, 4 rows affected (0.38 sec)
+\end{itemize}
+\end{enumerate}
+\end{document}
