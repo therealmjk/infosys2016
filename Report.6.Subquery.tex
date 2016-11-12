@@ -11,16 +11,16 @@
 \begin{verbatim}
 SELECT * FROM employees 
 WHERE last_name IN
-(
-SELECT last_name
-FROM employees,dept_manager,departments
-WHERE 
-employees.emp_no = dept_manager.emp_no
-AND
-dept_manager.dept_no = departments.dept_no
-AND
-dept_name = 'Finance'
-);
+	(
+	SELECT last_name
+	FROM employees,dept_manager,departments
+	WHERE 
+	employees.emp_no = dept_manager.emp_no
+	AND
+	dept_manager.dept_no = departments.dept_no
+	AND
+	dept_name = 'Finance'
+	);
 \end{verbatim}
 
 \begin{verbatim}
@@ -52,80 +52,77 @@ employees.emp_no = dept_emp.emp_no
 AND
 dept_emp.dept_no = departments.dept_no
 AND
-dept_emp.dept_no='d004' AND YEAR(hire_date) > 
-(
-SELECT YEAR(from_date) FROM dept_manager
-WHERE dept_no = 'd004'
-ORDER BY dept_no DESC
-LIMIT 0,1
-);
+dept_name='Production' AND hire_date > 
+	(
+	SELECT MAX(from_date) FROM dept_manager,departments
+	WHERE
+	dept_manager.dept_no = departments.dept_no
+	AND
+	dept_name = 'Production'
+	);
 \end{verbatim}
 
 \begin{verbatim}
-| Cordelia Paludetto               | 1993-01-28 |
-| Aron Lindqvist                   | 1990-01-07 |
-| Tuval Tempesti                   | 1990-08-09 |
-| Srinidhi Theuretzbacher          | 1989-12-17 |
-| Lillian Setiz                    | 1991-11-08 |
-| Holgard Nanard                   | 1988-07-04 |
-| Yongqiao Dalton                  | 1995-06-20 |
-| Randy Matzov                     | 1988-11-10 |
-| Uwe Uludag                       | 1989-02-26 |
-| Shuichi Piazza                   | 1989-09-16 |
-| Uri Juneja                       | 1989-08-28 |
+| Aria Millington                  | 1997-01-02 |
+| Paddy Serdy                      | 1997-01-28 |
+| Uzi Ravishankar                  | 1998-02-03 |
+| Shrikanth Luiz                   | 1996-11-07 |
+| Mohan England                    | 1997-11-13 |
+| Ziva Veevers                     | 1996-11-03 |
+| Ortrun Delaune                   | 1998-01-03 |
+| Reuven Avouris                   | 1997-02-03 |
+| Arun Rajaraman                   | 1997-09-07 |
+| Yoshinari Theuretzbacher         | 1997-05-17 |
+| Florina Cusworth                 | 1997-05-18 |
 | DeForest Mullainathan            | 1997-04-07 |
-| Navin Argence                    | 1990-04-24 |
-| Dekang Lichtner                  | 1993-01-12 |
-| Zito Baaz                        | 1990-09-27 |
 | Sachin Tsukuda                   | 1997-11-30 |
 +----------------------------------+------------+
-64697 rows in set (0.71 sec)
+3758 rows in set (0.69 sec)
 \end{verbatim}
 
 \item Find the average salary of each department, from highest to lowest
 
 \begin{verbatim}
-SELECT * FROM
-(
-SELECT dept_name,AVG(salary) AS Avg_Salary FROM salaries
-JOIN 
-employees ON salaries.emp_no = employees.emp_no
-JOIN
-dept_emp ON employees.emp_no = dept_emp.emp_no
-JOIN
-departments ON dept_emp.dept_no = departments.dept_no
-GROUP BY dept_name
-)AS temp_table
-ORDER BY Avg_Salary DESC;
+SELECT dept_no,AVG(Avg_Salary) AS Av_Salary FROM
+	(
+	SELECT salaries.emp_no,AVG(salary) AS Avg_Salary FROM salaries
+	JOIN 
+		employees ON salaries.emp_no = employees.emp_no
+	GROUP BY salaries.emp_no
+	)AS temp_table 
+	JOIN dept_emp on temp_table.emp_no=dept_emp.emp_no
+GROUP BY dept_no
+ORDER BY Av_Salary DESC;
 \end{verbatim}
 
 \begin{verbatim}
-+--------------------------+------------+
-| dept_name                | Avg_Salary |
-+--------------------------+------------+
-| Marketing and Sales      | 78220.6010 |
-| Finance                  | 70489.3649 |
-| Production               | 59605.4825 |
-| Research and Development | 59517.6088 |
-| Customer Service         | 58770.3665 |
-| Quality Management       | 57251.2719 |
-| Human Resources          | 55574.8794 |
-+--------------------------+------------+
-7 rows in set (4.64 sec)
++---------+----------------+
+| dept_no | Av_Salary      |
++---------+----------------+
+| d011    | 75852.69558780 |
+| d002    | 68061.43501801 |
+| d004    | 57253.31382027 |
+| d010    | 57188.90672100 |
+| d009    | 56480.08591880 |
+| d006    | 54892.93507273 |
+| d003    | 53214.29085744 |
++---------+----------------+
+7 rows in set (4.85 sec)
 \end{verbatim}
 
 \item Find the average salary of each job title, from highest to lowest
 
 \begin{verbatim}
 SELECT title,AVG(Avg_Salary) AS Av_Salary FROM
-(
-SELECT title,AVG(salary) AS Avg_Salary FROM titles
-JOIN 
-employees ON titles.emp_no = employees.emp_no
-JOIN
-salaries ON employees.emp_no = salaries.emp_no
-GROUP BY title
-)AS temp_table
+	(
+	SELECT title,AVG(salary) AS Avg_Salary FROM titles
+	JOIN 
+		employees ON titles.emp_no = employees.emp_no
+	JOIN
+		salaries ON employees.emp_no = salaries.emp_no
+	WHERE title LIKE '%Engineer%'
+	GROUP BY title
+	)AS temp_table
 GROUP BY title
 ORDER BY Av_Salary DESC;
 \end{verbatim}
@@ -134,15 +131,11 @@ ORDER BY Av_Salary DESC;
 +--------------------+----------------+
 | title              | Av_Salary      |
 +--------------------+----------------+
-| Senior Staff       | 70470.83530000 |
-| Staff              | 69309.10230000 |
-| Manager            | 66924.27060000 |
 | Senior Engineer    | 60543.21910000 |
 | Engineer           | 59508.03970000 |
 | Assistant Engineer | 59304.98630000 |
-| Technique Leader   | 59294.37420000 |
 +--------------------+----------------+
-7 rows in set (5.86 sec)
+3 rows in set (12.18 sec)
 \end{verbatim}
 
 \end{enumerate}
