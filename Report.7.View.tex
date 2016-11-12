@@ -1,0 +1,153 @@
+\documentclass[]{article}
+
+\begin{document}
+
+
+
+\begin{enumerate}
+
+\item Who have the same name as the managers of the "Finance" Department?
+
+\begin{verbatim}
+CREATE VIEW VwManagerFinance
+AS
+SELECT last_name
+	FROM employees,dept_manager,departments
+WHERE 
+	employees.emp_no = dept_manager.emp_no
+AND
+	dept_manager.dept_no = departments.dept_no
+AND
+	dept_name = 'Finance';
+
+SELECT * FROM employees, VwManagerFinance
+WHERE employees.last_name = VwManagerFinance.last_name;
+\end{verbatim}
+
+\begin{verbatim}
+| 490322 | 1958-05-06 | Uri           | Legleitner | M      | 1995-09-25 | Legleitner |
+| 493063 | 1955-04-24 | Danil         | Alpin      | F      | 1997-02-05 | Alpin      |
+| 493266 | 1959-05-28 | Constantijn   | Legleitner | M      | 1986-05-25 | Legleitner |
+| 493332 | 1958-12-20 | Anoosh        | Legleitner | M      | 1988-11-10 | Legleitner |
+| 493821 | 1963-06-03 | Aiichiro      | Legleitner | F      | 1988-04-07 | Legleitner |
+| 495608 | 1955-01-02 | Gift          | Legleitner | M      | 1994-04-28 | Legleitner |
+| 496062 | 1955-01-18 | Xinan         | Legleitner | M      | 1994-05-02 | Legleitner |
+| 497267 | 1956-05-24 | Gilbert       | Alpin      | F      | 1990-07-21 | Alpin      |
+| 497479 | 1960-09-03 | Ramalingam    | Alpin      | M      | 1992-05-03 | Alpin      |
+| 497947 | 1963-08-15 | Ekawit        | Alpin      | M      | 1995-06-29 | Alpin      |
+| 497954 | 1957-12-17 | Hilary        | Legleitner | M      | 1991-08-07 | Legleitner |
+| 498115 | 1957-10-11 | Geoffry       | Alpin      | M      | 1985-10-01 | Alpin      |
+| 498634 | 1964-02-17 | Heping        | Alpin      | M      | 1987-12-14 | Alpin      |
+| 499867 | 1962-01-25 | Hidde         | Alpin      | F      | 1988-10-13 | Alpin      |
++--------+------------+---------------+------------+--------+------------+------------+
+408 rows in set (0.22 sec)
+\end{verbatim}
+
+\item Who in the "Production" department were hired after the promotion of the last manager in that department?
+
+\begin{verbatim}
+CREATE VIEW VwProductionDept
+AS
+SELECT dept_manager.dept_no AS dept_no,MAX(from_date) as from_date 
+FROM dept_manager,departments
+WHERE
+	dept_manager.dept_no = departments.dept_no
+AND
+	dept_name = 'Production';
+	
+SELECT CONCAT(first_name,' ',last_name),hire_date
+FROM employees,dept_emp,departments,VwProductionDept
+WHERE
+employees.emp_no = dept_emp.emp_no
+AND
+dept_emp.dept_no = departments.dept_no
+AND
+departments.dept_no = VwProductionDept.dept_no
+AND
+dept_name='Production' AND hire_date > VwProductionDept.from_date;
+
+\end{verbatim}
+
+\begin{verbatim}
+| Jaihie Suwa                      | 1998-03-07 |
+| Aria Millington                  | 1997-01-02 |
+| Paddy Serdy                      | 1997-01-28 |
+| Uzi Ravishankar                  | 1998-02-03 |
+| Shrikanth Luiz                   | 1996-11-07 |
+| Mohan England                    | 1997-11-13 |
+| Ziva Veevers                     | 1996-11-03 |
+| Ortrun Delaune                   | 1998-01-03 |
+| Reuven Avouris                   | 1997-02-03 |
+| Arun Rajaraman                   | 1997-09-07 |
+| Yoshinari Theuretzbacher         | 1997-05-17 |
+| Florina Cusworth                 | 1997-05-18 |
+| DeForest Mullainathan            | 1997-04-07 |
+| Sachin Tsukuda                   | 1997-11-30 |
++----------------------------------+------------+
+3758 rows in set (0.97 sec)
+\end{verbatim}
+
+\item Find the average salary of each department, from highest to lowest
+
+\begin{verbatim}
+CREATE VIEW VwAVGDepartment
+AS
+SELECT salaries.emp_no AS emp_no,AVG(salary) AS Avg_Salary FROM salaries
+JOIN 
+	employees ON salaries.emp_no = employees.emp_no
+GROUP BY salaries.emp_no;
+
+SELECT dept_no,AVG(Avg_Salary) AS Av_Salary FROM VwAVGDepartment
+JOIN 
+	dept_emp on VwAVGDepartment.emp_no=dept_emp.emp_no
+GROUP BY dept_no
+ORDER BY Av_Salary DESC;
+\end{verbatim}
+
+\begin{verbatim}
++---------+----------------+
+| dept_no | Av_Salary      |
++---------+----------------+
+| d011    | 75852.69558780 |
+| d002    | 68061.43501801 |
+| d004    | 57253.31382027 |
+| d010    | 57188.90672100 |
+| d009    | 56480.08591880 |
+| d006    | 54892.93507273 |
+| d003    | 53214.29085744 |
++---------+----------------+
+7 rows in set (4.63 sec)
+\end{verbatim}
+
+\item Find the average salary of each job title, from highest to lowest
+
+\begin{verbatim}
+CREATE VIEW VwAVGJob
+AS
+SELECT title,AVG(salary) AS Avg_Salary FROM titles
+JOIN 
+	employees ON titles.emp_no = employees.emp_no
+JOIN
+	salaries ON employees.emp_no = salaries.emp_no
+WHERE title LIKE '%Engineer%'
+GROUP BY title;
+
+SELECT title,AVG(Avg_Salary) AS Av_Salary FROM VwAVGJob
+GROUP BY title
+ORDER BY Av_Salary DESC;
+\end{verbatim}
+
+\begin{verbatim}
++--------------------+----------------+
+| title              | Av_Salary      |
++--------------------+----------------+
+| Senior Engineer    | 60543.21910000 |
+| Engineer           | 59508.03970000 |
+| Assistant Engineer | 59304.98630000 |
++--------------------+----------------+
+3 rows in set (3.23 sec)
+\end{verbatim}
+
+\end{enumerate}
+
+\end{document}
