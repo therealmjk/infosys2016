@@ -1,0 +1,303 @@
+\documentclass[]{article}
+
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+\usepackage{color}
+\usepackage[normalem]{ulem}
+
+\begin{document}
+
+\begin{enumerate}
+
+\item Determine the concept that needs to be stored
+
+\begin{itemize}
+\item Magazine
+\item MagazineVolume
+\item Articles
+\item Author
+\item ArticleAuthor
+\item MagazineOrder
+\end{itemize}
+
+\item Determine attributes of each concept
+
+\begin{enumerate}
+\item Magazine
+\begin{itemize}
+\item issn
+\item title
+\item number
+\item year
+\end{itemize}
+
+\item Articles
+\begin{itemize}
+\item art\_no
+\item title
+\item begin\_page
+\item end\_page
+\end{itemize}
+
+\item Author
+\begin{itemize}
+\item auth\_no
+\item name
+\item email
+\item ascription
+\end{itemize}
+
+\item MagazineOrder
+\begin{itemize}
+\item ord\_no
+\item number
+\end{itemize}
+\end{enumerate}
+
+\item Determine links (relationships) between them
+
+\begin{itemize}
+\item Magazine (has) Articles
+\item Articles (has) Authors
+\item Magazine (has) MagazineOrder
+\end{itemize}
+
+\item Determine types of attributes
+
+\begin{enumerate}
+\item Magazine
+\begin{itemize}
+\item issn \textcolor{red}{\textbf{varchar(20)}}
+\item title \textcolor{red}{\textbf{varchar(50)}}
+\item number \textcolor{red}{\textbf{int}}
+\item year \textcolor{red}{\textbf{varchar(10)}}
+\end{itemize}
+
+\item Articles
+\begin{itemize}
+\item art\_no \textcolor{red}{\textbf{int}}
+\item title \textcolor{red}{\textbf{varchar(50)}}
+\item begin\_page \textcolor{red}{\textbf{int}}
+\item end\_page \textcolor{red}{\textbf{int}}
+\end{itemize}
+
+\item Author
+\begin{itemize}
+\item auth\_no \textcolor{red}{\textbf{int}}
+\item name \textcolor{red}{\textbf{varchar(50)}}
+\item email \textcolor{red}{\textbf{varchar(50)}}
+\item ascription \textcolor{red}{\textbf{varchar(50)}}
+\end{itemize}
+
+\item MagazineOrder
+\begin{itemize}
+\item ord\_no \textcolor{red}{\textbf{int}}
+\item number \textcolor{red}{\textbf{int}}
+\end{itemize}
+\end{enumerate}
+
+\item Solve foreign key links:
+
+\begin{enumerate}
+\item add primary key
+
+\begin{enumerate}
+\item Magazine
+\begin{itemize}
+\item \textcolor{red}{\textbf{issn varchar(20)}}
+\item title varchar(50)
+\item number int
+\item year varchar(10)
+\end{itemize}
+
+\item Articles
+\begin{itemize}
+\item \textcolor{red}{\textbf{art\_no int}}
+\item title varchar(50)
+\item begin\_page int
+\item end\_page int
+\end{itemize}
+
+\item Author
+\begin{itemize}
+\item \textcolor{red}{\textbf{auth\_no int}}
+\item name varchar(50)
+\item email varchar(50)
+\item ascription varchar(50)
+\end{itemize}
+
+\item MagazineOrder
+\begin{itemize}
+\item \textcolor{red}{\textbf{ord\_no int}}
+\item number int
+\end{itemize}
+\end{enumerate}
+
+\item add foreign key for n-n
+
+\begin{enumerate}
+\item Magazine
+\begin{itemize}
+\item issn varchar(20)
+\item title varchar(50)
+\item \sout{number int}
+\item year varchar(10)
+\end{itemize}
+
+\item \textcolor{red}{MagazineVolume
+\begin{itemize}
+\item mag\_no int
+\item issn varchar(20)
+\item number int
+\end{itemize}}
+
+\item Articles
+\begin{itemize}
+\item art\_no int
+\item \textcolor{red}{\textbf{mag\_no int}}
+\item title varchar(50)
+\item begin\_page int
+\item end\_page int
+\end{itemize}
+
+\item Author
+\begin{itemize}
+\item auth\_no int
+\item name varchar(50)
+\item email varchar(50)
+\item ascription varchar(50)
+\end{itemize}
+
+\item \textcolor{red}{ArticleAuthor
+\begin{itemize}
+\item id int
+\item art\_no int
+\item auth\_no int
+\end{itemize}}
+
+\item MagazineOrder
+\begin{itemize}
+\item ord\_no int
+\item \textcolor{red}{\textbf{mag\_no int}}
+\item number int
+\end{itemize}
+\end{enumerate}
+
+\item add foreign key for 1-n
+
+\begin{enumerate}
+\item Magazine
+\begin{itemize}
+\item issn varchar(20)
+\item title varchar(50)
+\item number int
+\item year varchar(10)
+\end{itemize}
+
+\item Articles
+\begin{itemize}
+\item art\_no int
+\item \textcolor{red}{\textbf{mag\_no int}}
+\item title varchar(50)
+\item begin\_page int
+\item end\_page int
+\end{itemize}
+
+\item Author
+\begin{itemize}
+\item auth\_no int
+\item name varchar(50)
+\item email varchar(50)
+\item ascription varchar(50)
+\end{itemize}
+
+\item MagazineOrder
+\begin{itemize}
+\item ord\_no int
+\item \textcolor{red}{\textbf{mag\_no int}}
+\item number int
+\end{itemize}
+\end{enumerate}
+
+\end{enumerate}
+
+\item EERD Diagram
+\\\\
+\includegraphics[width=\textwidth]{EERD2.jpg}
+\\
+\item Implementation
+
+\begin{enumerate}
+\item Database
+\begin{verbatim}
+CREATE database MagazineDB;
+\end{verbatim}
+
+\item Tables
+\begin{verbatim}
+CREATE TABLE Magazine(
+	issn varchar(20) primary key,
+	title varchar(50),
+	year varchar(10)
+);
+
+CREATE TABLE MagazineVolume(
+	mag_no int primary key auto_increment,
+	issn varchar(20),
+	number int,
+	foreign key(issn) references Magazine(issn)
+);
+
+CREATE TABLE Articles(
+	art_no int primary key auto_increment,
+	mag_no int, 
+	title varchar(50) UNIQUE,
+	begin_page int,
+	end_page int,
+	foreign key(mag_no) references MagazineVolume(mag_no)
+);
+
+CREATE TABLE Author(
+	auth_no int primary key auto_increment,
+	name varchar(50),
+	email varchar(50),
+	ascription varchar(50)
+);
+
+CREATE TABLE ArticleAuthor(
+	id int primary key auto_increment,
+	art_no int,
+	auth_no int,
+	foreign key(art_no) references Articles(art_no),
+	foreign key(auth_no) references Author(auth_no)
+);
+
+CREATE TABLE MagazineOrder(
+	ord_id int primary key auto_increment,
+	mag_no int,
+	number int,
+	foreign key(mag_no) references MagazineVolume(mag_no)
+);
+\end{verbatim}
+
+\item Show Tables
+\begin{verbatim}
+SHOW tables;
+
++----------------------+
+| Tables_in_magazinedb |
++----------------------+
+| articleauthor        |
+| articles             |
+| author               |
+| magazine             |
+| magazineorder        |
+| magazinevolume       |
++----------------------+
+6 rows in set (0.00 sec)
+\end{verbatim}
+\end{enumerate}
+
+\end{enumerate}
+
+\end{document}
