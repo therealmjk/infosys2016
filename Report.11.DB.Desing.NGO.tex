@@ -1,0 +1,444 @@
+\documentclass[]{article}
+
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+\usepackage{color}
+\usepackage[normalem]{ulem}
+
+\begin{document}
+
+\begin{enumerate}
+
+\item Determine the concept that needs to be stored
+
+\begin{itemize}
+\item Country
+\item City
+\item Employee
+\item EmpDirector
+\item HeadOFfice
+\item HeadOfficeEmployees
+\item Project
+\item ProjectAction
+\item ProjectInvestment
+\end{itemize}
+
+\item Determine attributes of each concept
+
+\begin{enumerate}
+\item Country
+\begin{itemize}
+\item country\_id
+\item name
+\end{itemize}
+
+\item City
+\begin{itemize}
+\item city\_id
+\item name
+\item inhabitants
+\end{itemize}
+
+\item Employee
+\begin{itemize}
+\item emp\_id
+\item first\_name
+\item last\_name
+\item birth\_date
+\item gender
+\end{itemize}
+
+\item EmpDirector
+\begin{itemize}
+\item emp\_id
+\item from\_date
+\item to\_date
+\end{itemize}
+
+\item HeadOffice
+\begin{itemize}
+\item headOffice\_id
+\item address
+\item phone
+\end{itemize}
+
+\item HeadOfficeEmployees
+\begin{itemize}
+\item emp\_id
+\item from\_date
+\item to\_date
+\end{itemize}
+
+\item Project
+\begin{itemize}
+\item project\_id
+\item title
+\item budget
+\item begin\_date
+\item end\_date
+\end{itemize}
+
+\item ProjectAction
+\begin{itemize}
+\item action\_id
+\item name
+\end{itemize}
+
+\item ProjectInvestment
+\begin{itemize}
+\item project\_id
+\item description
+\end{itemize}
+\end{enumerate}
+
+\item Determine links (relationships) between them
+
+\begin{itemize}
+\item EmpDirector (Is A) Employee
+\item Country (Has) City
+\item City (Has) HeadOffice
+\item HeadOffice (Has) Employee
+\item HeadOffice (Has) Project
+\item Employee (Has) Project
+\item Project (Has) Action
+\item City (has) Action
+\item Project (has) Investment
+\end{itemize}
+
+\item Determine types of attributes
+
+\begin{enumerate}
+\item Country
+\begin{itemize}
+\item country\_id \textcolor{red}{\textbf{int}}
+\item name \textcolor{red}{\textbf{varchar(30)}}
+\end{itemize}
+
+\item City
+\begin{itemize}
+\item city\_id \textcolor{red}{\textbf{int}}
+\item name \textcolor{red}{\textbf{varchar(30)}}
+\item inhabitants \textcolor{red}{\textbf{int}}
+\end{itemize}
+
+\item Employee
+\begin{itemize}
+\item emp\_id \textcolor{red}{\textbf{int}}
+\item first\_name \textcolor{red}{\textbf{varchar(30)}}
+\item last\_name \textcolor{red}{\textbf{varchar(30)}}
+\item birth\_date \textcolor{red}{\textbf{date}}
+\item gender \textcolor{red}{\textbf{char(1)}}
+\end{itemize}
+
+\item EmpDirector
+\begin{itemize}
+\item emp\_id \textcolor{red}{\textbf{int}}
+\item from\_date \textcolor{red}{\textbf{date}}
+\item to\_date \textcolor{red}{\textbf{date}}
+\end{itemize}
+
+\item HeadOffice
+\begin{itemize}
+\item headOffice\_id \textcolor{red}{\textbf{int}}
+\item address \textcolor{red}{\textbf{varchar(100)}}
+\item phone	\textcolor{red}{\textbf{varchar(30)}}
+\end{itemize}
+
+\item HeadOfficeEmployees
+\begin{itemize}
+\item emp\_id \textcolor{red}{\textbf{int}}
+\item from\_date \textcolor{red}{\textbf{date}}
+\item to\_date \textcolor{red}{\textbf{date}}
+\end{itemize}
+
+\item Project
+\begin{itemize}
+\item project\_id \textcolor{red}{\textbf{int}}
+\item title \textcolor{red}{\textbf{varchar(50)}}
+\item budget \textcolor{red}{\textbf{float}}
+\item begin\_date \textcolor{red}{\textbf{date}}
+\item end\_date \textcolor{red}{\textbf{date}}
+\end{itemize}
+
+\item ProjectAction
+\begin{itemize}
+\item action\_id \textcolor{red}{\textbf{int}}
+\item name \textcolor{red}{\textbf{varchar(50)}}
+\end{itemize}
+
+\item ProjectInvestment
+\begin{itemize}
+\item project\_id \textcolor{red}{\textbf{int}}
+\item description \textcolor{red}{\textbf{varchar(100)}}
+\end{itemize}
+\end{enumerate}
+
+\item Solve foreign key links:
+
+\begin{enumerate}
+\item add primary key
+
+\begin{enumerate}
+\item Country
+\begin{itemize}
+\item \textcolor{red}{\textbf{country\_id int}}
+\item name varchar(30)
+\end{itemize}
+
+\item City
+\begin{itemize}
+\item \textcolor{red}{\textbf{city\_id int}}
+\item name varchar(30)
+\item inhabitants int
+\end{itemize}
+
+\item Employee
+\begin{itemize}
+\item \textcolor{red}{\textbf{emp\_id int}}
+\item first\_name varchar(30)
+\item last\_name varchar(30)
+\item birth\_date date
+\item gender char(1)
+\end{itemize}
+
+\item EmpDirector
+\begin{itemize}
+\item \textcolor{red}{\textbf{emp\_id int}}
+\item from\_date date
+\item to\_date date
+\end{itemize}
+
+\item HeadOffice
+\begin{itemize}
+\item \textcolor{red}{\textbf{headOffice\_id int}}
+\item address varchar(100)
+\item phone	varchar(30)
+\end{itemize}
+
+\item HeadOfficeEmployees
+\begin{itemize}
+\item \textcolor{red}{\textbf{emp\_id int}}
+\item headOffice\_id int
+\item from\_date date
+\item to\_date date
+\end{itemize}
+
+\item Project
+\begin{itemize}
+\item \textcolor{red}{\textbf{project\_id int}}
+\item title varchar(50)
+\item budget float
+\item begin\_date date
+\item end\_date date
+\end{itemize}
+
+\item ProjectAction
+\begin{itemize}
+\item \textcolor{red}{\textbf{action\_id int}}
+\item name varchar(50)
+\end{itemize}
+
+\item ProjectInvestment
+\begin{itemize}
+\item \textcolor{red}{\textbf{project\_id int}}
+\item description varchar(100)
+\end{itemize}
+\end{enumerate}
+
+\item add foreign key for n-n
+
+\begin{itemize}
+\item \textbf{NONE}
+\end{itemize}
+
+\item add foreign key for 1-n
+
+\begin{enumerate}
+\item Country
+\begin{itemize}
+\item country\_id int
+\item name varchar(30)
+\end{itemize}
+
+\item City
+\begin{itemize}
+\item city\_id int
+\item \textcolor{red}{\textbf{country\_id int}}
+\item name varchar(30)
+\item inhabitants int
+\end{itemize}
+
+\item Employee
+\begin{itemize}
+\item emp\_id int
+\item first\_name varchar(30)
+\item last\_name varchar(30)
+\item birth\_date date
+\item gender char(1)
+\end{itemize}
+
+\item EmpDirector
+\begin{itemize}
+\item \textcolor{red}{\textbf{emp\_id int}}
+\item from\_date date
+\item to\_date date
+\end{itemize}
+
+\item HeadOffice
+\begin{itemize}
+\item headOffice\_id int
+\item \textcolor{red}{\textbf{city\_id int}}
+\item \textcolor{red}{\textbf{emp\_id int}}
+\item address varchar(100)
+\item phone	varchar(30)
+\end{itemize}
+
+\item HeadOfficeEmployees
+\begin{itemize}
+\item \textcolor{red}{\textbf{emp\_id int}}
+\item \textcolor{red}{\textbf{headOffice\_id int}}
+\item from\_date date
+\item to\_date date
+\end{itemize}
+
+\item Project
+\begin{itemize}
+\item project\_id int
+\item \textcolor{red}{\textbf{headOffice\_id int}}
+\item \textcolor{red}{\textbf{emp\_id int}}
+\item title varchar(50)
+\item budget float
+\item begin\_date date
+\item end\_date date
+\end{itemize}
+
+\item ProjectAction
+\begin{itemize}
+\item action\_id int
+\item \textcolor{red}{\textbf{project\_id int}}
+\item \textcolor{red}{\textbf{city\_id int}}
+\item name varchar(50)
+\end{itemize}
+
+\item ProjectInvestment
+\begin{itemize}
+\item \textcolor{red}{\textbf{project\_id int}}
+\item description varchar(100)
+\end{itemize}
+\end{enumerate}
+
+\end{enumerate}
+
+\item EERD Diagram
+\\\\
+\includegraphics[width=\textwidth]{EERD3.jpg}
+\\
+\item Implementation
+
+\begin{enumerate}
+\item Database
+\begin{verbatim}
+CREATE database NGODB;
+\end{verbatim}
+
+\item Tables
+\begin{verbatim}
+CREATE TABLE Country(
+	country_id int primary key auto_increment,
+	name varchar(30)
+);
+
+CREATE TABLE City(
+	city_id int primary key auto_increment,
+	country_id int,
+	name varchar(30),
+	inhabitants int,
+	foreign key(country_id) references Country(country_id)
+);
+
+CREATE TABLE Employee(
+	emp_id int primary key auto_increment,
+	first_name varchar(30),
+	last_name varchar(30),
+	birth_date date,
+	gender char(1)
+);
+
+CREATE TABLE EmpDirector(
+	emp_id int primary key,
+	from_date date,
+	to_date date,
+	foreign key(emp_id) references Employee(emp_id)
+);
+
+CREATE TABLE HeadOffice(
+	headoffice_id int primary key auto_increment,
+	city_id int,
+	emp_id int,
+	address varchar(100),
+	phone varchar(30),
+	foreign key(city_id) references City(city_id),
+	foreign key(emp_id) references EmpDirector(emp_id)
+);
+
+CREATE TABLE HeadOfficeEmployees(
+	emp_id int primary key,
+	headoffice_id int,
+	from_date date,
+	to_date date,
+	foreign key(emp_id) references Employee(emp_id),
+	foreign key(headoffice_id) references HeadOffice(headoffice_id)
+);
+
+CREATE TABLE Project(
+	project_id int primary key auto_increment,
+	headoffice_id int,
+	emp_id int,
+	title varchar(50),
+	budget float,
+	begin_date date,
+	end_date date,
+	foreign key(headoffice_id) references HeadOffice(headoffice_id),
+	foreign key(emp_id) references Employee(emp_id)
+);
+
+CREATE TABLE ProjectAction(
+	action_id int primary key auto_increment,
+	project_id int,
+	city_id int,
+	name varchar(50),
+	foreign key(project_id) references Project(project_id),
+	foreign key(city_id) references City(city_id)
+);
+
+CREATE TABLE ProjectInvestment(
+	project_id int primary key,
+	description varchar(100),
+	foreign key(project_id) references Project(project_id)
+);
+\end{verbatim}
+
+\item Show Tables
+\begin{verbatim}
+SHOW tables;
+
++---------------------+
+| Tables_in_ngodb     |
++---------------------+
+| city                |
+| country             |
+| empdirector         |
+| employee            |
+| headoffice          |
+| headofficeemployees |
+| project             |
+| projectaction       |
+| projectinvestment   |
++---------------------+
+9 rows in set (0.00 sec)
+\end{verbatim}
+\end{enumerate}
+
+\end{enumerate}
+
+\end{document}
