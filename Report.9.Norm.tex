@@ -1,0 +1,39 @@
+\documentclass[]{article}
+
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+
+\begin{document}
+
+\begin{enumerate}
+
+\item Which normal form does the employee database satisfy?
+\\\\
+The table satisfies the 3NF (Third Normal Form)
+\\
+\item Why?
+
+\begin{enumerate}
+\item All the tables in the employee database are designed to not have and don't have repeated data or repeated columns.
+\\
+\item All tables have primary keys with columns depending on them
+\end{enumerate}
+
+\item Produce a 3NF of the following Order form document by normalization
+\\\\
+\includegraphics[width=\textwidth]{EERD.jpg}
+\\
+\begin{enumerate}
+\item The customer table was created because this table saves all the information of all the customers on a seperate table since it's possible to have over a thousands of customers.
+\\
+\item A product table also created to store all the products on a separate table since we could also have so many products.
+\\
+\item The order table stores the orders made by the customer. This has a relationship to the customer table to show which customer placed an order.
+\\
+\item The fourth table is the OrderProducts table that saves the products that were ordered. This has a relationship to the order table to show the products that an order has.
+
+\end{enumerate}
+
+\end{enumerate}
+
+\end{document}
